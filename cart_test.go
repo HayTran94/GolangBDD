@@ -3,13 +3,12 @@ package cart_test
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
 	. "cart"
 )
 
 var _ = Describe("Cart", func() {
-	itemA := Item{ID: "itemA", Name: "Item A", Price: 10.20, Qty: 0}
-	itemB := Item{ID: "itemB", Name: "Item B", Price: 7.66, Qty: 0}
+	itemA := Item{ID: "itemA", Name: "Item A", Price: 10.5, Qty: 0}
+	itemB := Item{ID: "itemB", Name: "Item B", Price: 7.25, Qty: 0}
 
 	Context("initialy", func() {
 		cart := Cart{}
@@ -101,9 +100,10 @@ var _ = Describe("Cart", func() {
 		originUniqueItemCount := cart.TotalUniqueItems()
 		originUnitCount := cart.TotalUnits()
 		originTotalAmount := cart.TotalAmount()
+		
+		cart.RemoveItem(itemA.ID, 1)
 
 		Context("removing 1 unit item A", func() {
-			cart.RemoveItem(itemA.ID, 1)
 			It("should reduce the number of items by 1", func(){
 				Expect(cart.TotalUniqueItems()).Should(Equal(originUniqueItemCount - 1))
 			})
@@ -117,18 +117,18 @@ var _ = Describe("Cart", func() {
 	})
 
 	Context("that has 2 unit of item A", func(){
-		cart := Cart{}
-		cart.AddItem(itemB) 
-		cart.AddItem(itemB)
-		
-		cart.AddItem(itemA)
-		cart.AddItem(itemA)
-
-		originUniqueItemCount := cart.TotalUniqueItems()
-		originUnitCount := cart.TotalUnits()
-		originTotalAmount := cart.TotalAmount()
-
 		Context("removing 1 unit item A", func() {
+			cart := Cart{}
+			cart.AddItem(itemB) 
+			cart.AddItem(itemB)
+
+			cart.AddItem(itemA)
+			cart.AddItem(itemA)
+
+			originUniqueItemCount := cart.TotalUniqueItems()
+			originUnitCount := cart.TotalUnits()
+			originTotalAmount := cart.TotalAmount()
+
 			cart.RemoveItem(itemA.ID, 1)
 
 			It("should not reduce the number of items", func(){
@@ -143,6 +143,17 @@ var _ = Describe("Cart", func() {
 		})
 
 		Context("removing 2 unit item A", func() {
+			cart := Cart{}
+			cart.AddItem(itemB) 
+			cart.AddItem(itemB)
+
+			cart.AddItem(itemA)
+			cart.AddItem(itemA)
+
+			originUniqueItemCount := cart.TotalUniqueItems()
+			originUnitCount := cart.TotalUnits()
+			originTotalAmount := cart.TotalAmount()
+			
 			cart.RemoveItem(itemA.ID, 2)
 
 			It("should reduce the number of items by 1", func(){
