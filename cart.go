@@ -34,8 +34,8 @@ func (c *Cart) RemoveItem(id string, n int){
 		if existingItem.Qty <= n {
 			delete(c.items, id)
 		} else {
-			existingItem.Qty -= n 
-			c.items[id] = existingItem
+			existingItem.Qty -= n
+			c.items[id] = existingItem 
 		}
 	}
 }
@@ -43,8 +43,8 @@ func (c *Cart) RemoveItem(id string, n int){
 func (c *Cart) TotalAmount() float64 {
 	c.init()
 	totalAmount := 0.0
-	for _,i := range c.items {
-		totalAmount += i.Price * float64(i.Qty)
+	for _, v := range c.items {
+		totalAmount += v.Price * float64(v.Qty)
 	}
 	return totalAmount
 }
@@ -52,8 +52,8 @@ func (c *Cart) TotalAmount() float64 {
 func (c *Cart) TotalUnits() int {
 	c.init()
 	totalUnits := 0
-	for _, i := range c.items {
-		totalUnits += i.Qty
+	for _, v := range c.items {
+		totalUnits += v.Qty
 	}
 	return totalUnits
 }
